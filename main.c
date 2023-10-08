@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <math.h>
+#include <stdbool.h>
 
 double equation(double first_num, double second_num, char operator); // Change the return type
 
@@ -9,35 +10,49 @@ int main()
     double second_num;
     char operator;
     double sum;
+    bool continue_calculating = true;
 
     printf("\t\t\tWelcome to my Calculator App\n\n");
-    printf("Enter First Number: ");
-    scanf("%lf", &first_num);
 
-    printf("Enter Operator (+, -, /, *, s): ");
-    scanf(" %c", &operator); // Note the space before %c to consume any leading whitespace
-
-    // Use a do-while loop to ensure a valid operator is entered
-    while (operator!= '+' && operator!= '-' && operator!= '/' && operator!= '*' && operator!= 's')
+    while (continue_calculating)
     {
-        printf("Please enter a correct operator! (+, -, /, *, s): ");
-        scanf(" %c", &operator);
-    }
+        printf("Enter First Number: ");
+        scanf("%lf", &first_num);
 
-    if (operator== 's')
-    {
-        // Square root operation only requires one input
-        sum = equation(first_num, 0, operator); // Remove the NULL argument
-    }
-    else
-    {
-        printf("Enter Second Number: ");
-        scanf("%lf", &second_num);
+        printf("Enter Operator (+, -, /, *, s): ");
+        scanf(" %c", &operator); // Note the space before %c to consume any leading whitespace
 
-        sum = equation(first_num, second_num, operator); // Remove the NULL argument
-    }
+        // Use a while loop to ensure a valid operator is entered
+        while (operator!= '+' && operator!= '-' && operator!= '/' && operator!= '*' && operator!= 's')
+        {
+            printf("Please enter a correct operator! (+, -, /, *, s): ");
+            scanf(" %c", &operator);
+        }
 
-    printf("Result: %.2lf\n", sum);
+        if (operator== 's')
+        {
+            // Square root operation only requires one input
+            sum = equation(first_num, 0, operator); // Remove the NULL argument
+        }
+        else
+        {
+            printf("Enter Second Number: ");
+            scanf("%lf", &second_num);
+
+            sum = equation(first_num, second_num, operator); // Remove the NULL argument
+        }
+
+        printf("Result: %.2lf\n", sum);
+
+        printf("Do you want to continue? (y/n): ");
+        char choice;
+        scanf(" %c", &choice);
+        
+        if (choice != 'y' && choice != 'Y')
+        {
+            continue_calculating = false;
+        }
+    }
 
     return 0;
 }
